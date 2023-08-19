@@ -11,7 +11,6 @@ struct ContentView: View {
         Picker("Select Mode", selection: $selectedMode) {
             Text("PSX").tag(Mode.psx)
             Text("N64").tag(Mode.n64)
-            // Add more mode options here as needed
         }
         .pickerStyle(SegmentedPickerStyle())
         .padding()
@@ -28,9 +27,8 @@ struct ContentView: View {
                     .border(Color.gray)
                     .disableAutocorrection(true)
                     .padding()
-                    .font(.system(size: 16)) // Set the desired font size here
+                    .font(.system(size: 16))
                     .onChange(of: editorText) { newValue in
-                        // Update the rightText with the uppercase version of userInput
                         compiledText = compileFfi(source: newValue, mode: selectedMode)
                     }
                 
@@ -41,10 +39,9 @@ struct ContentView: View {
                     .frame(width: (1 - dividerPosition) * geometry.size.width - 70)
                     .border(Color.gray)
                     .padding()
-                    .font(.system(size: 16)) // Set the desired font size here
+                    .font(.system(size: 16))
                     .disabled(true)
             }
-            
             .gesture(
                 DragGesture()
                     .onChanged { value in
@@ -60,16 +57,6 @@ struct ContentView: View {
             )
         }
     }
-//
-//    func screenWidth() -> CGFloat {
-//        let width: CGFloat
-//        #if os(macOS)
-//        width = NSScreen.main?.frame.width ?? 800 // Default to 800 if NSScreen is not available
-//        #else
-//        width = UIScreen.main.bounds.width
-//        #endif
-//        return width / 2
-//    }
 }
 
 struct Resizer: View {
