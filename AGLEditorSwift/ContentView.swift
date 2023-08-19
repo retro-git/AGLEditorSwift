@@ -28,6 +28,7 @@ struct ContentView: View {
                     .border(Color.gray)
                     .disableAutocorrection(true)
                     .padding()
+                    .font(.system(size: 16)) // Set the desired font size here
                     .onChange(of: editorText) { newValue in
                         // Update the rightText with the uppercase version of userInput
                         compiledText = compileFfi(source: newValue, mode: selectedMode)
@@ -40,6 +41,7 @@ struct ContentView: View {
                     .frame(width: (1 - dividerPosition) * geometry.size.width - 70)
                     .border(Color.gray)
                     .padding()
+                    .font(.system(size: 16)) // Set the desired font size here
                     .disabled(true)
             }
             
