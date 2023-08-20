@@ -18,6 +18,7 @@ struct ContentView: View {
             // When selectedMode changes, recompile the text with the new mode
             compiledText = compileFfi(source: editorText, mode: newValue)
         }
+        .accessibilityIdentifier("modePicker")
         
         GeometryReader { geometry in
             HStack(spacing: 0) {
@@ -31,6 +32,8 @@ struct ContentView: View {
                     .onChange(of: editorText) { newValue in
                         compiledText = compileFfi(source: newValue, mode: selectedMode)
                     }
+                    .accessibilityIdentifier("inputEditor")
+                
                 
                 Resizer()
                 
@@ -41,6 +44,7 @@ struct ContentView: View {
                     .padding()
                     .font(.system(size: 16))
                     .disabled(true)
+                    .accessibilityIdentifier("outputEditor")
             }
             .gesture(
                 DragGesture()

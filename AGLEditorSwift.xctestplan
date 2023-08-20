@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "BE4F450F-C9F7-4A36-B2C5-4B03D40D4FE4",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:AGLEditorSwift.xcodeproj",
+      "identifier" : "B58E45512A90B28A00A33698",
+      "name" : "AGLEditorSwift"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:AGLEditorSwift.xcodeproj",
+        "identifier" : "B58E45622A90B28C00A33698",
+        "name" : "AGLEditorSwiftTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:AGLEditorSwift.xcodeproj",
+        "identifier" : "B58E456C2A90B28C00A33698",
+        "name" : "AGLEditorSwiftUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

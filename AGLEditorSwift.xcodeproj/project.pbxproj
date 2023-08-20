@@ -64,6 +64,7 @@
 		B58E456D2A90B28C00A33698 /* AGLEditorSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AGLEditorSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58E45712A90B28C00A33698 /* AGLEditorSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGLEditorSwiftUITests.swift; sourceTree = "<group>"; };
 		B58E45732A90B28C00A33698 /* AGLEditorSwiftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGLEditorSwiftUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B5A3CB0B2A924F93001CE44D /* AGLEditorSwift.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AGLEditorSwift.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +96,7 @@
 		B58E45492A90B28A00A33698 = {
 			isa = PBXGroup;
 			children = (
+				B5A3CB0B2A924F93001CE44D /* AGLEditorSwift.xctestplan */,
 				B58E45542A90B28A00A33698 /* AGLEditorSwift */,
 				B58E45662A90B28C00A33698 /* AGLEditorSwiftTests */,
 				B58E45702A90B28C00A33698 /* AGLEditorSwiftUITests */,
