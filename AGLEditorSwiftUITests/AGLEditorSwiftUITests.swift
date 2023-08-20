@@ -12,7 +12,7 @@ final class AGLEditorSwiftUITests: XCTestCase {
     var app: XCUIApplication!
     var inputEditor: XCUIElement!
     var outputEditor: XCUIElement!
-    var modePicker: XCUIElement!
+    var modeButtons: XCUIElementQuery!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -24,9 +24,17 @@ final class AGLEditorSwiftUITests: XCTestCase {
         
         app = XCUIApplication()
         app.launch()
+        
+        #if os(iOS)
         inputEditor = app.textViews["inputEditor"]
         outputEditor = app.textViews["outputEditor"]
-        modePicker = app.segmentedControls["modePicker"]
+        modeButtons = app.segmentedControls["modePicker"].buttons
+        #elseif os(macOS)
+        let window = app/*@START_MENU_TOKEN@*/.windows["AGLEditorSwift.ContentView-1-AppWindow-1"]/*[[".windows[\"AGLEditorSwift\"]",".windows[\"AGLEditorSwift.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        inputEditor = window/*@START_MENU_TOKEN@*/.scrollViews["inputEditor"]/*[[".groups.scrollViews[\"inputEditor\"]",".scrollViews[\"inputEditor\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.children(matching: .textView).element
+        outputEditor = window.scrollViews["outputEditor"].children(matching: .textView).element
+        modeButtons = window.radioButtons
+        #endif
     }
 
     override func tearDownWithError() throws {
@@ -39,7 +47,7 @@ final class AGLEditorSwiftUITests: XCTestCase {
         // Check output is "failed to compile"
         XCTAssertEqual(outputEditor.value as! String, "failed to compile")
     }
-    
+
     func testValidCode() throws {
         // Write valid code into the input
         inputEditor.clearAndEnterText("write(8, 0x681C8, 5 + 1);")
@@ -49,9 +57,9 @@ final class AGLEditorSwiftUITests: XCTestCase {
     func testValidCodePlatformSwitch() {
         inputEditor.clearAndEnterText("write(8, 0x681C8, 5 + 1);")
         XCTAssertEqual(outputEditor.value as! String, "300681c8 0006")
-        modePicker.buttons["N64"].tap()
+        modeButtons["N64"].tap()
         XCTAssertEqual(outputEditor.value as! String, "800681c8 0006")
-        modePicker.buttons["PSX"].tap()
+        modeButtons["PSX"].tap()
         XCTAssertEqual(outputEditor.value as! String, "300681c8 0006")
     }
 

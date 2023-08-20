@@ -34,8 +34,20 @@ struct ContentView: View {
                     }
                     .accessibilityIdentifier("inputEditor")
                 
-                
                 Resizer()
+                
+                // Button that copies compiledText to clipboard, both on Mac and iPad
+                Button(action: {
+                    #if os(macOS)
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(compiledText, forType: .string)
+                    #else
+                    UIPasteboard.general.string = compiledText
+                    #endif
+                }) {
+                    Image(systemName: "doc.on.doc")
+                        .padding()
+                }
                 
                 // Right Side TextEditor (Read-Only)
                 TextEditor(text: $compiledText)
