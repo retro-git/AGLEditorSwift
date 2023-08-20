@@ -6,19 +6,38 @@ struct ContentView: View {
     @State private var dividerPosition: CGFloat = 0.5 // Initial position of the divider
     @State private var selectedMode: Mode = .psx
     
+    let font = Font.custom("SF Mono", size: 20)
+    
     var body: some View {
-        // Mode Picker
-        Picker("Select Mode", selection: $selectedMode) {
-            Text("PSX").tag(Mode.psx)
-            Text("N64").tag(Mode.n64)
+        
+        HStack() {
+            // Mode Picker
+            Picker("Select Mode", selection: $selectedMode) {
+                Text("PSX").tag(Mode.psx)
+                Text("N64").tag(Mode.n64)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            .font(font)
+            .onChange(of: selectedMode) { newValue in
+                // When selectedMode changes, recompile the text with the new mode
+                compiledText = compileFfi(source: editorText, mode: newValue)
+            }
+            .accessibilityIdentifier("modePicker")
+            
+            // Button that copies compiledText to clipboard, both on Mac and iPad
+            Button(action: {
+                #if os(macOS)
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(compiledText, forType: .string)
+                #else
+                UIPasteboard.general.string = compiledText
+                #endif
+            }) {
+                Image(systemName: "doc.on.doc")
+            }
+            .padding()
         }
-        .pickerStyle(SegmentedPickerStyle())
-        .padding()
-        .onChange(of: selectedMode) { newValue in
-            // When selectedMode changes, recompile the text with the new mode
-            compiledText = compileFfi(source: editorText, mode: newValue)
-        }
-        .accessibilityIdentifier("modePicker")
         
         GeometryReader { geometry in
             HStack(spacing: 0) {
@@ -28,7 +47,7 @@ struct ContentView: View {
                     .border(Color.gray)
                     .disableAutocorrection(true)
                     .padding()
-                    .font(.system(size: 16))
+                    .font(font)
                     .onChange(of: editorText) { newValue in
                         compiledText = compileFfi(source: newValue, mode: selectedMode)
                     }
@@ -36,25 +55,12 @@ struct ContentView: View {
                 
                 Resizer()
                 
-                // Button that copies compiledText to clipboard, both on Mac and iPad
-                Button(action: {
-                    #if os(macOS)
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(compiledText, forType: .string)
-                    #else
-                    UIPasteboard.general.string = compiledText
-                    #endif
-                }) {
-                    Image(systemName: "doc.on.doc")
-                        .padding()
-                }
-                
                 // Right Side TextEditor (Read-Only)
                 TextEditor(text: $compiledText)
                     .frame(width: (1 - dividerPosition) * geometry.size.width - 70)
                     .border(Color.gray)
                     .padding()
-                    .font(.system(size: 16))
+                    .font(font)
                     .disabled(true)
                     .accessibilityIdentifier("outputEditor")
             }
